@@ -8,12 +8,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EE854ECF-5142-4A67-B07F-73237B5908B7}</ProjectGuid>
+    <ProjectGuid>{18AB3FF7-7DA7-4688-AE91-1A8074AEC7CB}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Meilenstein0</RootNamespace>
-    <AssemblyName>Meilenstein0</AssemblyName>
+    <RootNamespace>Paket01</RootNamespace>
+    <AssemblyName>Paket01</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -75,7 +75,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Aufgabe3.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -94,9 +93,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>9893</DevelopmentServerPort>
+          <DevelopmentServerPort>2712</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:9893/</IISUrl>
+          <IISUrl>http://localhost:2712/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
