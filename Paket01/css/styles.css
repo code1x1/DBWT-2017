@@ -1,0 +1,19 @@
+﻿body {
+    font-family: 'Clan' Verdana, Geneva, sans-serif;
+}
+#logo {
+    width: 160px;
+    height: 120px;
+    background-image: url("/img/mensa_Eupener_Strasse .jpg");
+    background-position: 90% 80%;
+}
+
+.my-search-btn {
+    color: #00b5ad;
+    border-color: #00b5ad;
+}
+
+.my-search-btn .my-search-btn-img {
+    width: 1em;
+    height: 1em;
+}
