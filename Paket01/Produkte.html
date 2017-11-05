@@ -1,87 +1,155 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta charset="utf-8" />
-    <title>Produkte.html</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Start.html</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
     <div class="container">
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" id="logo" href="#"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Start.html">Start<span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link">|</a></li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/Produkte.html">Mahlzeiten</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link">|</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Bestellung</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link">|</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">FH-Aachen</a>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn my-2 my-sm-0 my-search-btn" type="submit">
-                            <img class="my-search-btn-img" src="img/si-glyph-magnifier.svg" />
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                         </button>
-                    </form>
+                        <a class="navbar-brand" id="logo" href="#"></a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse margin-top-sides" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/Start.html">Start<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item hidden-xs"><a class="nav-link">|</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Produkte.html">Mahlzeiten</a>
+                            </li>
+                            <li class="nav-item hidden-xs"><a class="nav-link">|</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Bestellung</a>
+                            </li>
+                            <li class="nav-item hidden-xs"><a class="nav-link">|</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://www.fh-aachen.de" target="_blank">FH-Aachen</a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="padding-top">
+                                <form class="form-inline my-2 my-lg-0" action="http://www.google.de/search" method="get">
+                                    <input class="form-control mr-sm-2 searchbar-input-width" type="search" name="q" placeholder="Search" aria-label="Search">
+                                    <input type="hidden" name="as_sitesearch" value="www.fh-aachen.de" />
+                                    <button class="btn my-2 my-sm-0 my-search-btn" type="submit" formtarget="_blank">
+                                        <span class="my-search-btn-img glyphicon glyphicon-search"></span>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+
                 </div>
+
+
             </nav>
         </header>
         <hr />
-        <div class="row">
-
-            <div class="col-md-12">
-                <img src="http://lorempixel.com/1100/200/food" />
+        <div class="row margin-top-row">
+            <div class="col-md-3">
+                <form method="get" action="">
+                    <fieldset>
+                        <legend>Speisenliste filtern</legend>
+                        <div>
+                            <select name="kategorien">
+                                <option value="1">Kategorien</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="verfugbar" id="verfugbar" value="available" /> <label for="verfugbar">verfugbar</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="vegetarisch" id="vegetar" value="vegetar" /> <label for="vegetar">vegetar</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="vegan" id="vegan" value="vegan" /> <label for="vegan">vegan</label>
+                        </div>
+                    </fieldset>
+                    <input type="submit" class="btn btn-default" value="Filtern" />
+                </form>
             </div>
-
+            <div class="col-md-9">
+                <h2>Verfügbare Speisen</h2>
+                <div class="row">
+                    <div class="col-md-2">
+                        <img class="full-width-img center-block" src="http://lorempixel.com/200/200/food/green" />
+                        <div class="text-center">Curry Wok</div>
+                        <div class="text-center"><a href="/Detail.html">Details</a></div>
+                    </div>
+                    <div class="col-md-2">
+                        <img class="full-width-img center-block" src="http://lorempixel.com/200/200/food/beef" />
+                        <div class="text-center">Schnitzel</div>
+                        <div class="text-center"><a href="/Detail.html">Details</a></div>
+                    </div>
+                    <div class="col-md-2">
+                        <img class="full-width-img center-block" src="http://lorempixel.com/200/200/food/corn" />
+                        <div class="text-center">Bratrolle</div>
+                        <div class="text-center"><a href="/Detail.html">Details</a></div>
+                    </div>
+                    <div class="col-md-2">
+                        <img class="full-width-img center-block" src="http://lorempixel.com/200/200/food/salad" />
+                        <div class="text-center">Krautsalat</div>
+                        <div class="text-center"><a href="/Detail.html">Details</a></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <img class="full-width-img center-block" src="http://lorempixel.com/200/200/food/milk" />
+                        <div class="text-center">Falafel</div>
+                        <div class="text-center"><a href="/Detail.html">Details</a></div>
+                    </div>
+                    <div class="col-md-2">
+                        <img class="full-width-img center-block" src="http://lorempixel.com/200/200/food/juice" />
+                        <div class="text-center">Currywurst</div>
+                        <div class="text-center"><a href="/Detail.html">Details</a></div>
+                    </div>
+                    <div class="col-md-2">
+                        <img class="full-width-img center-block" src="http://lorempixel.com/200/200/food/cheese" />
+                        <div class="text-center">Käsestulle</div>
+                        <div class="text-center"><a href="/Detail.html">Details</a></div>
+                    </div>
+                    <div class="col-md-2">
+                        <img class="full-width-img center-block" src="http://lorempixel.com/200/200/food/water" />
+                        <div class="text-center">Spiegelei</div>
+                        <div class="text-center"><a href="/Detail.html">Details</a></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <hr />
         <footer>
 
-            <nav class="navbar navbar-expand-lg navbar-light ">
-                <div class="col-md-2">
-                    (c) 2017 DBWT
-                </div>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Login</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link">|</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Registration</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link">|</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Zutatenliste</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link">|</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Impressum.html">Impressum</a>
-                        </li>
-                    </ul>
+            <div class="col-md-2 padding-top">
+                <span class="glyphicon glyphicon-copyright-mark"></span> 2017 DBWT
+            </div>
 
-                </div>
-            </nav>
+            <ol class="breadcrumb">
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Registration</a></li>
+                <li><a href="#">Zutatenliste</a></li>
+                <li><a href="#">Registration</a></li>
+            </ol>
+
+
         </footer>
     </div>
-    <script src="js/jquery-3.2.1.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>
