@@ -1,0 +1,60 @@
+﻿@using MySql.Data.MySqlClient;
+@using System.Configuration;
+
+@helper Liste()
+{
+
+
+    <h2>Verfügbare Speisen 
+    
+    @if (Request.Params["kategorien"] != null)
+    {
+        MySqlConnection kategoriecon = new MySqlConnection(ConfigurationManager.ConnectionStrings["webapp"].ConnectionString);
+        kategoriecon.Open();
+        MySqlCommand kategoriecmd = kategoriecon.CreateCommand();
+        kategoriecmd.CommandText = @"select k.Bezeichnung as Kategorie, k.ID
+                            from kategorie as k
+                            where k.ID = @kategorien";
+        kategoriecmd.Parameters.AddWithValue("kategorien", Request.Params["kategorien"]);
+        MySqlDataReader kategorieresult = kategoriecmd.ExecuteReader();
+        if (kategorieresult.HasRows)
+        {
+            kategorieresult.Read();
+            <span>( @kategorieresult["Kategorie"].ToString() )</span>
+        }
+
+    }</h2>
+
+
+
+MySqlConnection produktecon = new MySqlConnection(ConfigurationManager.ConnectionStrings["webapp"].ConnectionString);
+produktecon.Open();
+MySqlCommand produktecmd = produktecon.CreateCommand();
+produktecmd.CommandText = @"select p.ID, p.Name, p.Beschreibung, pr.Gastbetrag, k.Bezeichnung as Kategorie, 
+                                b.`Binärdaten`, b.AltText, b.Title, b.Unterschrift from produkt as p
+	                            join preis as pr on p.PreisFK = pr.ID
+	                            join kategorie as k on p.KategorieFK = k.ID
+	                            join bild as b on p.BildFK = b.ID
+                                where (p.KategorieFK = @kategorien OR @kategorien IS NULL)
+                                and (p.Vegan = @vegan OR @vegan IS NULL)
+                                and (p.Vegetarisch = @vegetarisch OR @vegetarisch IS NULL)";
+produktecmd.Parameters.AddWithValue("kategorien", Request.Params["kategorien"]);
+produktecmd.Parameters.AddWithValue("vegan", Request.Params["vegan"]);
+produktecmd.Parameters.AddWithValue("vegetarisch", Request.Params["vegetarisch"]);
+
+MySqlDataReader produkteresult = produktecmd.ExecuteReader();
+
+    <div class="row">
+        @while (produkteresult.Read())
+        {
+
+            <div class="col-md-2">
+                <img class="full-width-img center-block" alt="@produkteresult["AltText"]" src="@produkteresult["Binärdaten"]" />
+                <div class="text-center">@produkteresult["Name"]</div>
+                <div class="text-center"><a href="/Detail.cshtml?id=@produkteresult["ID"]">Details</a></div>
+            </div>
+
+        }
+    </div>
+    
+}

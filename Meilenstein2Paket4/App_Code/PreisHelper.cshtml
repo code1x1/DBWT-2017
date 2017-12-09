@@ -1,0 +1,48 @@
+﻿@using MySql.Data.MySqlClient;
+@using System.Configuration;
+
+
+@helper PreisAusgabe(int id)
+{
+
+string sqlQuery = @"select p.ID, p.Beschreibung, p.Name, 
+                        pr.Gastbetrag, pr.Studentenbetrag, pr.Mitarbeiterbetrag, 
+                        k.Bezeichnung as Kategorie,
+                        b.`Binärdaten`, b.AltText, b.Title, b.Unterschrift from produkt as p
+	                    join preis as pr on p.PreisFK = pr.ID
+	                    join kategorie as k on p.KategorieFK = k.ID
+	                    join bild as b on p.BildFK = b.ID
+                        where p.ID= @ProduktID";
+MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["webapp"].ConnectionString);
+con.Open(); // danach ist möglich, mit dem DB Server zu interagieren
+MySqlCommand cmd = con.CreateCommand();
+cmd.CommandText = sqlQuery;
+cmd.Parameters.AddWithValue("ProduktID", id);
+// jetzt an die DB schicken!
+MySqlDataReader r = cmd.ExecuteReader();
+
+r.Read();
+
+if (string.IsNullOrEmpty(Session["user"] as string))
+{
+    <div>Gast Preis</div>
+    <div>@string.Format("{0:#.00}", Convert.ToDecimal(r["Gastbetrag"].ToString())) €</div>
+}
+else {
+    if (Session["role"].ToString().Equals("Student"))
+    {
+        <div>Studenten Preis</div>
+        <div>@string.Format("{0:#.00}", Convert.ToDecimal(r["Studentenbetrag"].ToString())) €</div>
+    }
+    else if (Session["role"].ToString().Equals("Mitarbeiter"))
+    {
+        <div>Mitarbeiter Preis</div>
+        <div>@string.Format("{0:#.00}", Convert.ToDecimal(r["Mitarbeiterbetrag"].ToString())) €</div>
+    }
+    else
+    {
+        <div>Gast Preis</div>
+        <div>@string.Format("{0:#.00}", Convert.ToDecimal(r["Gastbetrag"].ToString())) €</div>
+    }
+}
+}

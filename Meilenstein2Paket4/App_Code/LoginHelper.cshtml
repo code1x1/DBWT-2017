@@ -1,0 +1,118 @@
+﻿@using MySql.Data.MySqlClient;
+@using System.Configuration;
+
+
+
+
+@helper LoginForm(string user, string passwd) {
+
+MySqlConnection logincon = new MySqlConnection(ConfigurationManager.ConnectionStrings["webapp"].ConnectionString);
+logincon.Open();
+MySqlCommand logincmd = new MySqlCommand("LoginProcedure", logincon);
+logincmd.CommandType = System.Data.CommandType.StoredProcedure;
+logincmd.Parameters.AddWithValue("@Lname", user);
+MySqlDataReader loginresult = logincmd.ExecuteReader();
+
+
+if (loginresult.Read() && !string.IsNullOrEmpty(loginresult["loginname"] as string))
+{
+    string dbhash = String.Format("{0}:{1}:{2}:{3}:{4}",
+                                    loginresult["algorithmus"],
+                                    loginresult["stretch"],
+                                    Convert.ToString(18),
+                                    loginresult["salt"],
+                                    loginresult["hash"]);
+    if (PasswordSecurity.PasswordStorage.VerifyPassword(passwd, dbhash))
+    {
+        Session["user"] = loginresult["loginname"];
+        Session["role"] = loginresult["role"];
+    }
+
+}
+else if(Request.Params["abmelden"] == "Abmelden")
+{
+    Session["user"] = null;
+    Session["role"] = null;
+}
+
+
+
+if ((!IsPost && string.IsNullOrEmpty(Session["user"] as string)) || Request.Params["abmelden"] == "Abmelden")
+{
+    <form method="post" action="/Login.cshtml">
+        <fieldset>
+            <legend>Login</legend>
+            <div class="input-group margin-top-row">
+                <span class="input-group-addon" id="basic-addon1">
+                    <span class="glyphicon glyphicon-user"></span>
+                </span>
+                <input type="text" name="user" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group margin-top-row">
+                <span class="input-group-addon" id="basic-addon2">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                </span>
+                <input type="password" name="pass" class="form-control" placeholder="Password" aria-describedby="basic-addon2">
+            </div>
+            <input type="submit" class="btn btn-default margin-top-row" value="Anmelden" />
+            <input type="hidden" name="redirect" value="@{
+                    string redirect;
+                if (!Request.Url.AbsoluteUri.Contains("Login"))
+                {
+                    redirect = Request.Url.AbsoluteUri;
+                }
+                else
+                {
+                    redirect = "/Start.cshtml";
+                }
+                @redirect
+            }" />
+        </fieldset>
+    </form>
+}
+else if (IsPost && string.IsNullOrEmpty(loginresult["loginname"] as string) && Request.Params["abmelden"] != "Abmelden")
+{
+
+    <form method="post" action="/Login.cshtml">
+        <fieldset>
+            <legend>Login</legend>
+            <div class="alert alert-danger">Dass hat nicht geklappt! Bitte versuchen Sie es erneut.</div>
+            <div class="input-group margin-top-row has-error">
+                <span class="input-group-addon" id="basic-addon1">
+                    <span class="glyphicon glyphicon-user"></span>
+                </span>
+                <input type="text" name="user" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group margin-top-row has-error">
+                <span class="input-group-addon" id="basic-addon2">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                </span>
+                <input type="password" name="pass" class="form-control" placeholder="Password" aria-describedby="basic-addon2">
+            </div>
+            <input type="submit" class="btn btn-default margin-top-row" value="Anmelden" />
+            <input type="hidden" name="redirect" value="@{
+                    string redirect;
+                if (!Request.Url.AbsoluteUri.Contains("Login"))
+                {
+                    redirect = Request.Url.AbsoluteUri;
+                }
+                else
+                {
+                    redirect = "/Start.cshtml";
+                }
+                @redirect
+            }" />
+        </fieldset>
+    </form>
+}
+else
+{
+    <form method="post" action="/Login.cshtml">
+        <fieldset>
+            <div>Hallo @Session["user"], Sie sind angemeldet als <strong>@Session["role"]</strong></div>
+            <input type="submit" name="abmelden" class="btn btn-default margin-top-row" value="Abmelden" />
+        </fieldset>
+    </form>
+}
+
+}

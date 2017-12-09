@@ -1,0 +1,56 @@
+﻿@{ 
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Start";
+}
+
+<div class="container">
+    @RenderPage("_Header.cshtml")
+    <hr />
+    <div class="row">
+
+        <div class="col-md-12">
+            <img class="full-width-img" alt="header" src="http://lorempixel.com/1100/200/food" />
+        </div>
+
+    </div>
+    <div class="row margin-top-row">
+        <div class="col-md-3">
+            <p class="alert alert-danger">
+                <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                Der Dienst <b>e-Mensa</b> ist noch beta. Sie können bereits <a href="Produkte.html">Mahlzeiten</a> durchstöbern, aber noch nicht bestellen.
+            </p>
+        </div>
+        <div class="col-md-9">
+            <div class="col-md-7">
+                <h3>Leckere Gerichte vorbestellen</h3>
+                <p>
+                    ... und gemeinsam mit Kommilitonen und Freunden essen
+                </p>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-default  margin-top-row">
+                    <span class="glyphicon glyphicon-hand-right"></span>
+                    Registrieren
+                </button>
+                <button class="btn btn-default  margin-top-row">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    Anmelden
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-top-row">
+        <div class="col-md-3">
+            <p class="alert alert-success">
+                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                Registrieren Sie sich <a href="#">hier</a>, um über die Veröffentlichung des Dienstes per Mail informiert zu werden.
+            </p>
+        </div>
+        <div class="col-md-9">
+            <img class="full-width-img" alt="sidebar-img" src="http://lorempixel.com/1100/200/food" />
+        </div>
+    </div>
+    <hr />
+    @RenderPage("_Footer.cshtml")
+</div>

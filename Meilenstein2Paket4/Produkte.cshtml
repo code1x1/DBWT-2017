@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Produkte";
+    
+}
+
+<div class="container">
+    @RenderPage("_Header.cshtml")
+    <hr />
+    <div class="row margin-top-row">
+        <div class="col-md-3">
+            @FilterHelper.FilterFormular()
+        </div>
+        <div class="col-md-9">
+            @SpeisenListeHelper.Liste()
+        </div>
+    </div>
+    <hr />
+    @RenderPage("_Footer.cshtml")
+</div>

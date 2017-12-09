@@ -1,0 +1,28 @@
+﻿
+@{ 
+    Layout = "~/_Layout.cshtml";
+    Page.Title = "Login";
+}
+
+
+
+<div class="container">
+    @RenderPage("_Header.cshtml")
+    <hr />
+    <div class="row margin-top-row">
+        <div class="col-md-3">
+            @if (Request.Params["user"] != null && Request.Params["pass"] != null)
+            {
+
+                @LoginHelper.LoginForm(Request.Params["user"], Request.Params["pass"]);
+            }
+            else
+            {
+                @LoginHelper.LoginForm("", "");
+            }
+
+        </div>
+    </div>
+    <hr />
+    @RenderPage("_Footer.cshtml")
+</div>

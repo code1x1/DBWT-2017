@@ -1,0 +1,52 @@
+﻿@using MySql.Data.MySqlClient;
+@using System.Configuration;
+
+@helper FilterFormular() {
+// Die Hilfsmethode kann Code und/oder Markup enthalten, z. B.
+// var msg = "Hallo " + name;
+// <p>@msg</p>
+// Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?LinkID=204658.
+
+MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["webapp"].ConnectionString);
+con.Open(); // danach ist möglich, mit dem DB Server zu interagieren
+MySqlCommand cmd = con.CreateCommand();
+cmd.CommandText = @"select k.Bezeichnung as Kategorie, k.ID
+	                    from kategorie as k";
+// jetzt an die DB schicken!
+MySqlDataReader kategorien = cmd.ExecuteReader();
+
+    <form method="get" action="~/Produkte.cshtml">
+        <fieldset>
+            <legend>Speisenliste filtern</legend>
+            <div>
+                <select name="kategorien">
+                    @while (kategorien.Read())
+                    {
+                        if (Request.Params["kategorien"] != null && @kategorien["ID"].ToString() == Request.Params["kategorien"])
+                        {
+                            <option value="@kategorien["ID"]" selected>@kategorien["Kategorie"]</option>
+                        }
+                        else
+                        {
+                            <option value="@kategorien["ID"]">@kategorien["Kategorie"]</option>
+                        }
+
+                    }
+                </select>
+            </div>
+            <div>
+                <input type="checkbox" name="verfugbar" id="verfugbar" value="1" /> <label for="verfugbar">verfugbar</label>
+            </div>
+            <div>
+                <input type="checkbox" name="vegetarisch" id="vegetar" value="1" /> <label for="vegetar">vegetar</label>
+            </div>
+            <div>
+                <input type="checkbox" name="vegan" id="vegan" value="1" /> <label for="vegan">vegan</label>
+            </div>
+        </fieldset>
+        <input type="submit" class="btn btn-default" value="Filtern" />
+    </form>
+
+
+}
+
