@@ -9,6 +9,7 @@
     
     @if (Request.Params["kategorien"] != null)
     {
+        
         MySqlConnection kategoriecon = new MySqlConnection(ConfigurationManager.ConnectionStrings["webapp"].ConnectionString);
         kategoriecon.Open();
         MySqlCommand kategoriecmd = kategoriecon.CreateCommand();
@@ -30,7 +31,7 @@
 MySqlConnection produktecon = new MySqlConnection(ConfigurationManager.ConnectionStrings["webapp"].ConnectionString);
 produktecon.Open();
 MySqlCommand produktecmd = produktecon.CreateCommand();
-produktecmd.CommandText = @"select p.ID, p.Name, p.Beschreibung, pr.Gastbetrag, k.Bezeichnung as Kategorie, 
+produktecmd.CommandText = @"select p.BildFK as BID, p.ID, p.Name, p.Beschreibung, pr.Gastbetrag, k.Bezeichnung as Kategorie,
                                 b.`Binärdaten`, b.AltText, b.Title, b.Unterschrift from produkt as p
 	                            join preis as pr on p.PreisFK = pr.ID
 	                            join kategorie as k on p.KategorieFK = k.ID
@@ -43,18 +44,34 @@ produktecmd.Parameters.AddWithValue("vegan", Request.Params["vegan"]);
 produktecmd.Parameters.AddWithValue("vegetarisch", Request.Params["vegetarisch"]);
 
 MySqlDataReader produkteresult = produktecmd.ExecuteReader();
+int i = 0;
 
-    <div class="row">
-        @while (produkteresult.Read())
-        {
+bool loop = produkteresult.Read();
+while (loop)
+{
 
-            <div class="col-md-2">
-                <img class="full-width-img center-block" alt="@produkteresult["AltText"]" src="@produkteresult["Binärdaten"]" />
-                <div class="text-center">@produkteresult["Name"]</div>
-                <div class="text-center"><a href="/Detail.cshtml?id=@produkteresult["ID"]">Details</a></div>
-            </div>
+            @:<div class="row">
+            
+            while (loop)
+            {
+                
+                @:<div class="col-md-2">
+                @:<div class="product-thumbnails">
+                    @Helps.Bild(produkteresult["BID"].ToString().AsInt())
+                @:</div>
+                    @:<div class="text-center">@produkteresult["Name"]</div>
+                    @:<div class="text-center"><a href="/Detail.cshtml?id=@produkteresult["ID"]">Details</a></div>
+                @:</div>
+                loop = produkteresult.Read();
+                i++;
+                if (i%4==0 && i!=0)
+                {
+                    i = 0;
+                    break;
+                }
+            }
 
-        }
-    </div>
-    
+            @:</div>
+    }
+
 }

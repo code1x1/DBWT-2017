@@ -44,3 +44,10 @@
 .padding-alert {
     padding: 8px 10px;
 }
+
+.product-thumbnails {
+    height: 7em;
+    overflow:hidden;
+    border: solid 1px #00b5ad;
+}
+

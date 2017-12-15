@@ -8,7 +8,7 @@
         Response.Redirect("~/Start.cshtml");
     }
 
-    string sqlQuery = @"select p.ID, p.Beschreibung, p.Name, pr.Gastbetrag, k.Bezeichnung as Kategorie, 
+    string sqlQuery = @"select p.BildFK as BID, p.ID, p.Beschreibung, p.Name, pr.Gastbetrag, k.Bezeichnung as Kategorie, 
                         b.`Binärdaten`, b.AltText, b.Title, b.Unterschrift from produkt as p
 	                    join preis as pr on p.PreisFK = pr.ID
 	                    join kategorie as k on p.KategorieFK = k.ID
@@ -52,7 +52,7 @@
         </div>
         <div class="col-md-6">
             <div>
-                <img class="full-width-img" src="@r["Binärdaten"]" alt="@r["AltText"]" />
+                @Helps.Bild(r["BID"].ToString().AsInt())
             </div>
             <div class="tabs-content">
                 <ul class="nav nav-tabs">

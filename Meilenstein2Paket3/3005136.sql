@@ -21,7 +21,7 @@ select f.film_id, f.title, f.rental_rate, COUNT(f.film_id) as 'Anzahl der Kopien
 -- 7. Verfügbare Kopien pro Store und rating
 select i.store_id, f.rating, COUNT(f.film_id) as 'Anzahl der Kopien'
 	from film as f join inventory as i on f.film_id = i.film_id 
-		group by i.store_id, f.rating order by i.store_id, f.rating asc;
+		group by i.store_id, f.rating order by i.store_id, CAST(f.rating as CHAR) asc;
 
 -- 8. Category Children aber rating nicht geeignet für Kinder
 select f.film_id, f.rating, f.title from film as f 
@@ -42,7 +42,8 @@ select co.country, COUNT(c.customer_id) as 'Anzahl der Kunden' from customer as 
 	join city as ci on a.city_id = ci.city_id
 	join country as co on co.country_id = ci.country_id
 		group by co.country_id
-			having COUNT(c.customer_id) >= 30;
+			having COUNT(c.customer_id) >= 30
+			order by COUNT(c.customer_id) desc;
 
 -- 11. Zahlungen der Kunden pro Monat
 select c.first_name, c.last_name, MONTHNAME(p.payment_date), SUM(p.amount) from payment as p 
