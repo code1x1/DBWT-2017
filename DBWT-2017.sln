@@ -9,7 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meilenstein1Paket1", "Meile
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meilenstein2Paket4", "Meilenstein2Paket4\Meilenstein2Paket4.csproj", "{09B4C056-8501-4AA2-9643-ECE58481337D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordStorage", "PasswordStorage\PasswordStorage.csproj", "{3026DD98-92DC-4CCF-ABCA-33C5A318E72A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasswordStorage", "PasswordStorage\PasswordStorage.csproj", "{3026DD98-92DC-4CCF-ABCA-33C5A318E72A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E2C49843-3C9F-45F9-83C7-6048CC4FD760}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
