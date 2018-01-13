@@ -1,0 +1,78 @@
+﻿
+@{
+    Page.Title = "Registrieren - Auswahl";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @RenderPage("~/Views/Shared/_Header.cshtml")
+    <h2>Registration Step 1</h2>
+    <div class="row">
+
+        <div class="col-lg-4 auswahl">
+            <div class="logo">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </div>
+            <div class="beschreibung">
+                Wenn du ein Gast an unserem Hochschulstandort bist registriere dich hier.
+            </div>
+            @Html.ActionLink("Gast", "RegisterGast", "User", null, new { @class = "btn btn-default" })
+
+        </div>
+
+        <div class="col-lg-4 auswahl">
+            <div class="logo">
+                <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+            </div>
+            <div class="beschreibung">
+                Wenn du ein Student an unserem Hochschulstandort bist registriere dich hier.
+            </div>
+            @Html.ActionLink("Student", "RegisterStudent", "User", null, new { @class = "btn btn-default" })
+
+        </div>
+
+        <div class="col-lg-4 auswahl">
+            <div class="logo">
+                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+            </div>
+            <div class="beschreibung">
+                Wenn du ein Mitarbeiter an unserem Hochschulstandort bist registriere dich hier.
+            </div>
+            @Html.ActionLink("Mitarbeiter","RegisterMitarbeiter","User", null, new { @class = "btn btn-default" })
+            
+        </div>
+
+    </div>
+    <div class="filler">
+
+    </div>
+    @RenderPage("~/Views/Shared/_Footer.cshtml")
+</div>
+
+
+@section style{
+    
+    <style>
+    .filler {
+        margin-bottom: 20em;
+    }
+    .logo .glyphicon {
+        font-size: 4em;
+    }
+
+    .logo {
+        text-align: center;
+    }
+
+    .auswahl {
+        margin-top: 3em;
+        text-align: center;
+    }
+
+    .auswahl .beschreibung {
+        width: 60%;
+        margin: 1em auto;
+    }
+    </style>
+    
+}

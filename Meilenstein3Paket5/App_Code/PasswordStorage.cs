@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace PasswordSecurity
+namespace Meilenstein3Paket5.PasswordSecurity
 {
     class InvalidHashException : Exception
     {
@@ -22,7 +22,7 @@ namespace PasswordSecurity
             : base(message, inner) { }
     }
 
-    public class PasswordStorage
+    class PasswordStorage
     {
         // These constants may be changed without breaking existing hashes.
         public const int SALT_BYTES = 24;

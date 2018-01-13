@@ -1,0 +1,138 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Page.Title = "Start";
+}
+
+<div class="container">
+    @RenderPage("~/Views/Shared/_Header.cshtml")
+    <hr />
+    <div class="row">
+
+        <div class="col-md-12">
+            <img class="full-width-img" alt="header" src="~/img/brot.jpg" />
+        </div>
+
+    </div>
+    <div class="row margin-top-row">
+        <div class="col-md-3">
+            <p class="alert alert-danger">
+                <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                Der Dienst <b>e-Mensa</b> ist noch beta. Sie können bereits @Html.ActionLink("Mahlzeiten", "Index", "Produkt") durchstöbern, aber noch nicht bestellen.
+            </p>
+        </div>
+        <div class="col-md-9">
+            <div class="col-md-7">
+                <h3>Leckere Gerichte vorbestellen</h3>
+                <p>
+                    ... und gemeinsam mit Kommilitonen und Freunden essen
+                </p>
+            </div>
+            @if (string.IsNullOrEmpty( Session["user"] as string))
+            {
+            <div class="col-md-2">
+                <a class="btn btn-default  margin-top-row" href="@Url.Action("Register","User")">
+                    <span class="glyphicon glyphicon-hand-right"></span>
+                    Registrieren
+                </a>
+                <a class="btn btn-default  margin-top-row" href="@Url.Action("Login","User")">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    Anmelden
+                </a>
+            </div>
+            }
+
+        </div>
+    </div>
+
+    <div class="row margin-top-row">
+@if (string.IsNullOrEmpty(Session["user"] as string))
+{
+
+        <div class="col-md-3">
+            <p class="alert alert-success">
+                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                Registrieren Sie sich @Html.ActionLink("hier", "Register", "User"), um über die Veröffentlichung des Dienstes per Mail informiert zu werden.
+            </p>
+        </div>
+}
+else
+{
+    <div class="col-md-3">
+        @LoginHelper.LoginForm()
+    </div>
+}
+        <div class="col-md-9">
+
+            @{
+
+                List<System.Xml.Linq.XElement> speiseplanxml = new List<System.Xml.Linq.XElement>();
+
+                if (ViewBag.xml != null)
+                {
+                    speiseplanxml = ViewBag.xml;
+                    <h2>Speiseplan Tagesmenüs</h2>
+                }
+                else
+                {
+                    <img class="full-width-img" alt="sidebar-img" src="~/img/sandwich.bmp" />
+                }
+
+                foreach (var v in speiseplanxml)
+                {
+                    <div class="row">
+
+                        @if (DateTimeOffset.Parse(v.Attribute("Tag").Value).Date == DateTimeOffset.Now.Date)
+                        {
+                            <h3>Heutiges Menü: @v.Element("Motto").Value (KW @v.Attribute("Kalenderwoche").Value)</h3>
+                        }
+                        else
+                        {
+                            <h3>@DateTimeOffset.Parse(v.Attribute("Tag").Value).Date.ToString("d") Menü: @v.Element("Motto").Value (KW @v.Attribute("Kalenderwoche").Value)</h3>
+                        }
+
+                        <table class="table">
+                            <tr>
+                                <th>Typ</th>
+                                <th>Mahlzeit</th>
+                                <th>Preis</th>
+                                @if (v.Attribute("Highlight") != null)
+                                {
+                                    <th>Bild</th>
+                                }
+                                else
+                                {
+                                    <th></th>
+                                }
+
+                            </tr>
+
+                            @foreach (var vv in v.Element("Produkte").Elements("Produkt"))
+                            {
+                                <tr>
+                                    <td>@vv.Attribute("Typ").Value.ToString()</td>
+                                    <td>
+                                        <h4>@vv.Element("titel").Value</h4>
+                                        <p>@vv.Element("beschreibung").Value</p>
+                                    </td>
+                                    <td>@vv.Element("anzeigePreis").Value (@vv.Element("preisVon").Value)</td>
+                                    <td>
+                                        @if (vv.Element("Bild") != null)
+                                        {
+                                            <img src="data:image/png;base64,@vv.Element("Bild").Value" alt="Err" class="thumbnail imgDetails imgProdukteDetails">
+                                        }
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+
+
+    <hr />
+    @RenderPage("~/Views/Shared/_Footer.cshtml")
+</div>

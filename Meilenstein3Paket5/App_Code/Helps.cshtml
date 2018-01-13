@@ -1,0 +1,44 @@
+﻿@using System.Configuration
+@using System.Data
+@using MySql.Data.MySqlClient
+@*Helps*@
+
+
+@functions
+{
+
+    public static string BlobToBase64(object b)
+    {
+        byte[] bytes = (byte[])b;
+        if (bytes != null)
+        {
+            return Convert.ToBase64String(bytes);
+        }
+        return "";
+    }
+
+}
+@helper Bild (int id)
+{
+
+string q = "SELECT `Binärdaten`, `AltText`, `Unterschrift` FROM Bild WHERE ID=@id";
+using (MySqlConnection con = new MySqlConnection(ConfigurationManager.ConnectionStrings["webapp"].ConnectionString))
+{
+    con.Open();
+    using (MySqlCommand cmd = con.CreateCommand())
+    {
+        cmd.CommandText = q;
+        cmd.Parameters.AddWithValue("id", id);
+        MySqlDataReader r = cmd.ExecuteReader(CommandBehavior.SingleResult);
+        if (r.Read())
+        {
+                // auch hier: wählen Sie den Methodennamen und drücken Sie F12 um den Methodentext zu sehen
+            string base64text = BlobToBase64(r["Binärdaten"]);
+
+                @* Standard für DataUri --> statt einem Pfad auf eine Datei wird in src die Binärdatenentsprechung geliefert *@
+            <img src="data:image/png;base64,@base64text" 
+                 alt="@r["AltText"]" class="full-width-img"/>
+        }
+    }
+}
+}

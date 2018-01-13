@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @RenderPage("~/Views/Shared/_Header.cshtml")
+    <hr />
+    <div class="row margin-top-row">
+        <div class="col-md-3">
+            @LoginHelper.LoginForm()
+
+
+        </div>
+    </div>
+    <hr />
+    @RenderPage("~/Views/Shared/_Footer.cshtml")
+</div>

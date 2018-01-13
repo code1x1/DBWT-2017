@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Meilenstein3Paket5.Models.Produkt>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Page.Title = "Produkte";
+    
+}
+
+<div class="container">
+    @RenderPage("~/Views/Shared/_Header.cshtml")
+    <hr />
+    <div class="row margin-top-row">
+        <div class="col-md-3">
+            @FilterHelper.FilterFormular(ViewBag.KategorieListe)
+        </div>
+        <div class="col-md-9">
+            
+            <h2>
+                Verfügbare Speisen <span>(@ViewBag.Kategorie)</span>
+            </h2>
+
+            <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-2">
+                    <div class="product-thumbnails">
+                        @Helps.Bild(item.BID)
+                       
+                    </div>
+                    <div class="text-center">@item.Name</div>
+                    <div class="text-center"><a href="/Produkt/Detail?id=@item.id">Details</a></div>
+                    
+                </div>
+            }
+            </div>
+
+        </div>
+    </div>
+    <hr />
+    @RenderPage("~/Views/Shared/_Footer.cshtml")
+</div>

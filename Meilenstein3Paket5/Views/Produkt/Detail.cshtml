@@ -1,0 +1,128 @@
+﻿@{
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Page.Title = "Detail";
+
+}
+
+<div class="container">
+    @RenderPage("~/Views/Shared/_Header.cshtml")
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+            <h2>Details für @ViewBag.detailProdukt.Name</h2>
+        </div>
+    </div>
+
+    <div class="row margin-top-row">
+        <div class="col-md-3">
+           
+           @LoginHelper.LoginForm()
+            <div class="alert-info margin-top-row padding-alert img-rounded">
+                <p>
+                    Melden Sie sich jetzt an um die wirklich viel günstigeren Preise für Mitarbeiter und Studenten zu sehen.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div>
+                @Helps.Bild(@ViewBag.detailProdukt.BID)
+            </div>
+            <div class="tabs-content">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#beschreibung">Beschreibung</a></li>
+                    <li role="presentation"><a href="#zutaten">Zutaten</a></li>
+                    <li role="presentation"><a href="#bewertung">Bewertungen</a></li>
+                </ul>
+                <div class="well" id="beschreibung">
+                    <p>
+                        @ViewBag.detailProdukt.Beschreibung
+                    </p>
+                </div>
+                <div class="well hidden" id="zutaten">
+                    <ul class="list-unstyled">
+                        <li class="list-group-item">Sesam</li>
+                        <li class="list-group-item">Kichererbsen</li>
+                        <li class="list-group-item">Curry</li>
+                        <li class="list-group-item">Wasser</li>
+                    </ul>
+                </div>
+                <div class="well hidden" id="bewertung">
+                    <form method="post" action="http://bc5.m2c-lab.fh-aachen.de:8080/data.php">
+                        <input type="hidden" value="3005136" name="matrikelnummer" />
+                        <input type="hidden" value="beh" name="kontrolle" />
+                        <div class="form-group">
+                            <label for="bewertung-bemerkung">Bemerkung</label>
+                            <textarea name="bemerkung" id="bewertung-bemerkung" class="form-control" cols="15" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="bewertung-benutzer">Benutzer</label>
+                            <input type="text" class="form-control" name="benutzer" id="bewertung-benutzer" />
+                        </div>
+                        <div class="form-group">
+                            <label for="bewertung-bewertung">Bewertung <span class="glyphicon glyphicon-star"></span></label>
+                            <select name="bewertung" class="form-control" id="bewertung-bewertung">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-default">Senden</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div>
+                @PreisHelper.PreisAusgabe(ViewBag.PreisName, ViewBag.Preis)
+            </div>
+
+            <div class="margin-top-row">
+                <button class="btn btn-default">
+                    <span class="glyphicon glyphicon-cutlery"></span>
+                    Vorbestellen
+                </button>
+            </div>
+        </div>
+    </div>
+    <hr />
+    @RenderPage("~/Views/Shared/_Footer.cshtml")
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $("document").ready(function () {
+
+            $(".tabs-content .nav-tabs li a").on("click", function ()
+            {
+                $(".tabs-content > div").addClass("hidden");
+                $(".tabs-content .nav-tabs li").removeClass("active");
+
+                console.log(this);
+                $(this.parentElement).attr("class", "active");
+                if ($(this).attr("href") === "#beschreibung")
+                {
+                    $(".tabs-content div#beschreibung").removeClass("hidden");
+                }
+                else if ($(this).attr("href") === "#zutaten")
+                {
+                    $(".tabs-content div#zutaten").removeClass("hidden");
+                }
+                else if ($(this).attr("href") === "#bewertung")
+                {
+                    $(".tabs-content div#bewertung").removeClass("hidden");
+                }
+            });
+
+        });
+
+    </script>
+}
+
